@@ -1,4 +1,4 @@
-package diremangoes.com.direhyperchess2;
+package diremangoes.com.direhyperchess;
 
 import java.io.BufferedReader;
 import java.io.IOException;
