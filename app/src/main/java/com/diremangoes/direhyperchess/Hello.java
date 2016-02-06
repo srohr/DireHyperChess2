@@ -57,10 +57,19 @@ public class Hello {
     }
     
     
-    
-    
-    
     // just shovel these functions into where you want them
+    // they are meant to be members and helpers for the ChessBoard class
+    
+    
+    // returns true if a tile has a piece on it
+    static boolean hasPiece(Tile t) {
+        return t.getPieceOwner() != 0;
+    }
+    // returns true if a tile has a piece on it of the specified colour
+    static boolean hasPiece(Tile t, int color) {
+        return t.getPieceOwner() == color;
+    }
+    
     
     // generates all possible movement locations, does not consider occlusion
     static ArrayList<Tile> getMoves(Tile t) {
@@ -210,6 +219,16 @@ public class Hello {
                 break;
             }
         }
+        
+        return ret;
+    }
+    
+    
+    // returns all the valid moves for a given target piece
+    // to convert this to a member function, remove the first argument and
+    //  have it reference the member tile array
+    static ArrayList<Tile> getValidMoves(ArrayList<Tile> tiles, Tile t) {
+        ArrayList<Tile> ret = new ArrayList();
         
         return ret;
     }
