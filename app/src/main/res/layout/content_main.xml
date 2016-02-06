@@ -10,61 +10,92 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.diremangoes.direhyperchess.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:background="#cfd8dc">
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"></RelativeLayout>
+        android:layout_height="60dp"
+        android:id="@+id/frameLayout"
+        android:background="#b0bec5">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/textView6" />
+    </FrameLayout>
 
     <TableLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tableLayout">
+        android:id="@+id/tableLayout"
+        android:foregroundGravity="center_vertical|center_horizontal"
+        android:gravity="center_vertical|center|center_horizontal"
+        android:layout_below="@+id/frameLayout"
+        android:layout_alignParentStart="true"
+        android:background="#90a4ae">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell1A"
-                android:background="@color/board1" />
+                android:id="@+id/cellA1"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell2A"
-                android:background="@color/board2" />
+                android:id="@+id/cellA2"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell3A"
-                android:background="@color/board1" />
+                android:id="@+id/cellA3"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell4A"
-                android:background="@color/board2" />
+                android:id="@+id/cellA4"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell5A"
-                android:background="@color/board1" />
+                android:id="@+id/cellA5"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell6A"
-                android:background="@color/board2" />
+                android:id="@+id/cellA6"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell7A"
-                android:background="@color/board1" />
+                android:id="@+id/cellA7"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell8A"
-                android:background="@color/board2" />
+                android:id="@+id/cellA8"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
         </TableRow>
 
         <TableRow
@@ -72,44 +103,60 @@
             android:layout_height="match_parent">
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell1B"
-                android:background="@color/board2" />
+                android:id="@+id/cellB1"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell2B"
-                android:background="@color/board1" />
+                android:id="@+id/cellB2"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell3B"
-                android:background="@color/board2" />
+                android:id="@+id/cellB3"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell4B"
-                android:background="@color/board1" />
+                android:id="@+id/cellB4"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell5B"
-                android:background="@color/board2" />
+                android:id="@+id/cellB5"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell6B"
-                android:background="@color/board1" />
+                android:id="@+id/cellB6"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell7B"
-                android:background="@color/board2" />
+                android:id="@+id/cellB7"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell8B"
-                android:background="@color/board1" />
+                android:id="@+id/cellB8"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
         </TableRow>
 
         <TableRow
@@ -117,44 +164,60 @@
             android:layout_height="match_parent">
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell1C"
-                android:background="@color/board1" />
+                android:id="@+id/cellC1"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell2C"
-                android:background="@color/board2" />
+                android:id="@+id/cellC2"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell3C"
-                android:background="@color/board1" />
+                android:id="@+id/cellC3"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell4C"
-                android:background="@color/board2" />
+                android:id="@+id/cellC4"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell5C"
-                android:background="@color/board1" />
+                android:id="@+id/cellC5"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell6C"
-                android:background="@color/board2" />
+                android:id="@+id/cellC6"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell7C"
-                android:background="@color/board1" />
+                android:id="@+id/cellC7"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell8C"
-                android:background="@color/board2" />
+                android:id="@+id/cellC8"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
         </TableRow>
 
         <TableRow
@@ -162,44 +225,60 @@
             android:layout_height="match_parent">
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell1D"
-                android:background="@color/board2" />
+                android:id="@+id/cellD1"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell2D"
-                android:background="@color/board1" />
+                android:id="@+id/cellD2"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell3D"
-                android:background="@color/board2" />
+                android:id="@+id/cellD3"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell4D"
-                android:background="@color/board1" />
+                android:id="@+id/cellD4"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell5D"
-                android:background="@color/board2" />
+                android:id="@+id/cellD5"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell6D"
-                android:background="@color/board1" />
+                android:id="@+id/cellD6"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell7D"
-                android:background="@color/board2" />
+                android:id="@+id/cellD7"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell8D"
-                android:background="@color/board1" />
+                android:id="@+id/cellD8"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
         </TableRow>
 
         <TableRow
@@ -207,44 +286,60 @@
             android:layout_height="match_parent">
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell1E"
-                android:background="@color/board1" />
+                android:id="@+id/cellE1"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell2E"
-                android:background="@color/board2" />
+                android:id="@+id/cellE2"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell3E"
-                android:background="@color/board1" />
+                android:id="@+id/cellE3"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell4E"
-                android:background="@color/board2" />
+                android:id="@+id/cellE4"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell5E"
-                android:background="@color/board1" />
+                android:id="@+id/cellE5"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell6E"
-                android:background="@color/board2" />
+                android:id="@+id/cellE6"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell7E"
-                android:background="@color/board1" />
+                android:id="@+id/cellE7"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell8E"
-                android:background="@color/board2" />
+                android:id="@+id/cellE8"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
         </TableRow>
 
         <TableRow
@@ -252,44 +347,60 @@
             android:layout_height="match_parent">
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell1F"
-                android:background="@color/board2" />
+                android:id="@+id/cellF1"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell2F"
-                android:background="@color/board1" />
+                android:id="@+id/cellF2"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell3F"
-                android:background="@color/board2" />
+                android:id="@+id/cellF3"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell4F"
-                android:background="@color/board1" />
+                android:id="@+id/cellF4"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell5F"
-                android:background="@color/board2" />
+                android:id="@+id/cellF5"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell6F"
-                android:background="@color/board1" />
+                android:id="@+id/cellF6"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell7F"
-                android:background="@color/board2" />
+                android:id="@+id/cellF7"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell8F"
-                android:background="@color/board1" />
+                android:id="@+id/cellF8"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
         </TableRow>
 
         <TableRow
@@ -297,44 +408,60 @@
             android:layout_height="match_parent">
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell1G"
-                android:background="@color/board1" />
+                android:id="@+id/cellG1"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell2G"
-                android:background="@color/board2" />
+                android:id="@+id/cellG2"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell3G"
-                android:background="@color/board1" />
+                android:id="@+id/cellG3"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell4G"
-                android:background="@color/board2" />
+                android:id="@+id/cellG4"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell5G"
-                android:background="@color/board1" />
+                android:id="@+id/cellG5"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell6G"
-                android:background="@color/board2" />
+                android:id="@+id/cellG6"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell7G"
-                android:background="@color/board1" />
+                android:id="@+id/cellG7"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell8G"
-                android:background="@color/board2" />
+                android:id="@+id/cellG8"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
         </TableRow>
 
         <TableRow
@@ -342,45 +469,62 @@
             android:layout_height="match_parent">
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell1H"
-                android:background="@color/board2" />
+                android:id="@+id/cellH1"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell2H"
-                android:background="@color/board1" />
+                android:id="@+id/cellH2"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell3H"
-                android:background="@color/board2" />
+                android:id="@+id/cellH3"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell4H"
-                android:background="@color/board1" />
+                android:id="@+id/cellH4"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell5H"
-                android:background="@color/board2" />
+                android:id="@+id/cellH5"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell6H"
-                android:background="@color/board1" />
+                android:id="@+id/cellH6"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell7H"
-                android:background="@color/board2" />
+                android:id="@+id/cellH7"
+                android:background="@color/board2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
             <ImageView
                 style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:id="@+id/cell8H"
-                android:background="@color/board1" />
+                android:id="@+id/cellH8"
+                android:background="@color/board1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                />
         </TableRow>
+
 
 
     </TableLayout>
@@ -389,7 +533,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/tableLayout"
-        android:layout_alignParentStart="true"></RelativeLayout>
+        android:layout_alignParentStart="true"
+        android:background="#b0bec5"></RelativeLayout>
 
 
 </RelativeLayout>
