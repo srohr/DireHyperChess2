@@ -35,9 +35,17 @@ public class Tile {
             System.out.println("cannot move to OWNED tile");
             return false;
         }
+        
+        // return false if moving piece to self
+        if (target.getxpos() == _xpos && target.getypos() == _ypos) {
+            System.out.println("cannot move to OWN tile");
+            return false;
+        }
+        
         // TODO: check for if move would put player into check
         
         
+        // based on piece type, determine if target is a valid location
         switch(_ptype) {
             case EMPTY: {
                 System.out.println("cannot move EMPTY piece");
@@ -54,7 +62,15 @@ public class Tile {
                 break;
             }
             case ROOK: {    // straight line in cardinal directions
-                System.out.println("TODO: Rook");
+                if (target.getxpos() == _xpos) {
+                    ret = true;
+                    break;
+                }
+                else if (target.getypos() == _ypos) {
+                    ret = true;
+                    break;
+                }
+                
                 break;
             }
             case BISHOP: {  // diagonal

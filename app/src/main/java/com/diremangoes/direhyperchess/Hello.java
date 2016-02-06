@@ -30,6 +30,20 @@ public class Hello {
         cell1.movePieceTo(new Tile(PieceType.QUEEN, 2, 4, 4));
         cell1.printInfo();
         System.out.println();
+        System.out.println();
+        
+        
+        // test rook
+        moveTo(new Tile(PieceType.ROOK, 1, 1,1), new Tile(PieceType.QUEEN, 2, 1,6));
+        moveTo(new Tile(PieceType.ROOK, 1, 1,1), new Tile(PieceType.QUEEN, 2, 4,1));
+        moveTo(new Tile(PieceType.ROOK, 1, 4,4), new Tile(PieceType.QUEEN, 2, 5,5));
+        moveTo(new Tile(PieceType.ROOK, 1, 4,4), new Tile(PieceType.QUEEN, 2, 5,3));
+        moveTo(new Tile(PieceType.ROOK, 1, 4,4), new Tile(PieceType.QUEEN, 2, 3,5));
+        moveTo(new Tile(PieceType.ROOK, 1, 4,4), new Tile(PieceType.QUEEN, 2, 2,4));
+        moveTo(new Tile(PieceType.ROOK, 2, 4,4), new Tile(PieceType.QUEEN, 2, 5,4));
+        System.out.println();
+        System.out.println();
+        
     }
     
     
@@ -43,14 +57,17 @@ public class Hello {
         return ret;
     }
     
-    boolean moveTo(Tile from, Tile to) {
+    // attempts to move a piece
+    static boolean moveTo(Tile from, Tile to) {
         return from.movePieceTo(to);
     }
     
+    // determines who (if anyone) is in check
     int checkCheck() {
         return 0;
     }
     
+    // determines who (if anyone) is in checkmate
     int checkCheckMate() {
         return 0;
     }
