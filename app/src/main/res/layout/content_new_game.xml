@@ -15,11 +15,12 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
+        android:text="Awaiting Connection..."
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:textSize="50dp" />
+        android:textSize="30dp"
+        android:layout_above="@+id/linearLayout3" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -172,21 +173,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/linearLayout2"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout3">
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText"
-            android:layout_weight="1"
-            android:hint="Type something here" />
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Send"
-            android:id="@+id/SendMessage"
-            android:layout_weight="3" />
     </LinearLayout>
 
 </RelativeLayout>

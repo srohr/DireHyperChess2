@@ -1,10 +1,17 @@
 package com.diremangoes.direhyperchess;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.ParcelUuid;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -21,13 +28,16 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Set;
 
 public class NewGame extends AppCompatActivity {
     private ServerSocket serverSocket = null;
@@ -49,12 +59,12 @@ public class NewGame extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button server, client, sendmsg;
+        final Button server, client, sendmsg;
         EditText clientport, serverport, serverIP, clientIP;
 
         client = (Button) findViewById(R.id.button);
         server = (Button) findViewById(R.id.button2);
-        sendmsg = (Button) findViewById(R.id.SendMessage);
+        //sendmsg = (Button) findViewById(R.id.SendMessage);
 
         clientport = (EditText) findViewById(R.id.connectPort);
         serverport = (EditText) findViewById(R.id.hostPort);
@@ -136,199 +146,51 @@ public class NewGame extends AppCompatActivity {
         client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Client", "Launching client");
+                //Client client1 = new Client(getApplicationContext(), CONNECTIP, CLIENTPORT);
+                //String ret = client1.Sync("Client Handshake");
+                //Log.d("Client", "Recieved string: \"" + ret + "\"");
+                //Launch(ret, "Server Handshake");
 
-                new Thread(new ClientThread()).start();
+
             }
         });
 
         server.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Server", "Launching server");
-                connected = true;
-                serverThread = new Thread(new ServerThread());
-                serverThread.start();
-            }
-        });
-
-        sendmsg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (connected) {
-                    try {
-                        EditText et = (EditText) findViewById(R.id.editText);
-                        String str = et.getText().toString();
-                        //str += "\n";
-                        PrintWriter out = new PrintWriter(new BufferedWriter(
-                                new OutputStreamWriter(socket.getOutputStream())),
-                                true);
-                        out.println(str);
-
-                        Log.i("Message to send", str);
-                    } catch (UnknownHostException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Not connected!",
-                            Toast.LENGTH_LONG
-                    );
-
-                    Log.e("Comms", "Not connected!");
-                }
-            }
-        });
-
-
-
-
-        text = (TextView) findViewById(R.id.text2);
-        updateConversationHandler = new Handler();
-
-
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        try {
-            serverSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    class ServerThread implements Runnable {
-        public void run() {
-            //Socket socket = null;
-            try {
-                serverSocket = new ServerSocket(SERVERPORT);
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            while (!Thread.currentThread().isInterrupted()) {
-                Log.d("Server", "Server Running");
                 try {
-                    socket = serverSocket.accept();
-                    connected = true;
-                    Log.i("Server", "Client connected!");
-                    CommunicationThread commThread = new CommunicationThread(socket);
-                    new Thread(commThread).start();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
 
-    class CommunicationThread implements Runnable {
-        private Socket clientSocket;
-        private BufferedReader input;
-        public CommunicationThread(Socket clientSocket) {
-            this.clientSocket = clientSocket;
-
-            try {
-                this.input = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        public void run() {
-            while (!Thread.currentThread().isInterrupted()) {
-                //Log.d("Server", "Server loop");
-                try {
-                    String read = input.readLine();
-                    updateConversationHandler.post(new updateUIThread(read));
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-    }
-
-    class updateUIThread implements Runnable {
-        private String msg;
-
-        public updateUIThread(String str) {
-            this.msg = str;
-        }
-
-        @Override
-        public void run() {
-            text = (TextView) findViewById(R.id.textView);
-            if (msg != null)
-                Log.d("Server", "Recieving message: " + msg);
-
-            if (msg != null && !msg.equals(""))
-                text.setText(msg);
-            else if (msg == null)
-                text.setText("Client message null?");
-            else
-                text.setText("Client message empty?");
-
-        }
-    }
-
-    class ClientThread implements Runnable {
-
-        @Override
-        public void run() {
-
-            try {
-                InetAddress serverAddr = InetAddress.getByName(CONNECTIP);
-                socket = new Socket(serverAddr, CLIENTPORT);
-
-            } catch (UnknownHostException e1) {
-                e1.printStackTrace();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-
-            for(;;){
-                try {
-                    EditText et = (EditText) findViewById(R.id.editText);
-                    String str = et.getText().toString();
-                    PrintWriter out = new PrintWriter(new BufferedWriter(
-                            new OutputStreamWriter(socket.getOutputStream())),
-                            true);
-                    out.println(str);
-                    out.flush();
-                    BufferedReader  in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    String msg = in.readLine();
-                    //System.out.println("MSG:" + read);
-                    text = (TextView) findViewById(R.id.textView);
-                    if (msg != null)
-                        Log.d("Client", "Recieving message: " + msg);
-
-                    if (msg != null && !msg.equals(""))
-                        text.setText(msg);
-                    else if (msg == null)
-                        text.setText("Client message null?");
-                    else
-                        text.setText("Client message empty?");
-
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        }
+        });
+
+        text = (TextView) findViewById(R.id.text2);
+        updateConversationHandler = new Handler();
 
     }
+
+    public void Launch(String msg, String desiredValue){
+        try {
+            if (msg.equals(desiredValue)) {
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                intent.putExtra("IP", CONNECTIP);
+                intent.putExtra("Port", CLIENTPORT);
+                String txt = "Handshake recieved.\nGame starting in ";
+                for (int i = 5; i > 0; i--) {
+                    text.setText(txt + i);
+                    Thread.sleep(1000);
+                }
+
+                startActivity(intent);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
 
 }
