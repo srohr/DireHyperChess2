@@ -49,6 +49,7 @@ public class MainActivity extends FragmentActivity {
     ServerSocket serverSocket;
     int defaultPort = 8080;
     EditText ServerPort;
+    Socket socket;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +125,7 @@ public class MainActivity extends FragmentActivity {
     }
 
 
+    Tile lastClickedTile;
     public void InitBoard(){
         ImageView[][] GUIBoard = new ImageView[8][8];
         {
@@ -193,7 +195,41 @@ public class MainActivity extends FragmentActivity {
             GUIBoard[7][7] = (ImageView) findViewById(R.id.cellH8);
         }
 
+        lastClickedTile = null;
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                GUIBoard[i][j].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Tile temp = null;// = ChessBoard[i][j];
+                        if (lastClickedTile != null && lastClickedTile.getPieceOwner() == 1){
+                            if(lastClickedTile.movePieceTo(temp)){
+                                //Successful move
+                                //Send to opponent
+                                SocketServerReplyThread send;
+                                String message = "M "
+                                        + String.valueOf(lastClickedTile.getxpos()) + String.valueOf(lastClickedTile.getypos())
+                                        + " "
+                                        + String.valueOf(temp.getxpos()) + String.valueOf(temp.getypos());
 
+                                send = new SocketServerReplyThread(socket, 1, message);
+                                send.run();
+
+                            }
+                            else{
+                                SocketServerReplyThread send;
+                                String message = "A";
+
+                                send = new SocketServerReplyThread(socket, 1, message);
+                                send.run();
+                            }
+                        }
+                        if (temp.getPieceOwner() == 1)
+                            lastClickedTile = temp;
+                    }
+                });
+            }
+        }
     }
 
 
@@ -230,7 +266,8 @@ public class MainActivity extends FragmentActivity {
                 });
 
                 while (true) {
-                    Socket socket = serverSocket.accept();
+                    //Socket
+                    socket = serverSocket.accept();
                     count++;
                     message += "#" + count + " from " + socket.getInetAddress()
                             + ":" + socket.getPort() + "\n";
@@ -246,7 +283,8 @@ public class MainActivity extends FragmentActivity {
                     });
 
                     SocketServerReplyThread socketServerReplyThread = new SocketServerReplyThread(
-                            socket, count);
+                            socket, count, "Handshake"
+                    );
                     socketServerReplyThread.run();
 
                 }
@@ -259,19 +297,20 @@ public class MainActivity extends FragmentActivity {
     }
 
 private class SocketServerReplyThread extends Thread {
-
+    String msgReply = "";
     private Socket hostThreadSocket;
     int cnt;
 
-    SocketServerReplyThread(Socket socket, int c) {
+    SocketServerReplyThread(Socket socket, int c, String mesg) {
         hostThreadSocket = socket;
         cnt = c;
+        msgReply = mesg;
     }
 
     @Override
     public void run() {
         OutputStream outputStream;
-        String msgReply = "Hello from Android, you are #" + cnt;
+        //msgReply = "Hello from Android, you are #" + cnt;
 
         try {
             outputStream = hostThreadSocket.getOutputStream();
@@ -279,7 +318,7 @@ private class SocketServerReplyThread extends Thread {
             printStream.print(msgReply);
             printStream.close();
 
-            message += "replayed: " + msgReply + "\n";
+            //message += "replayed: " + msgReply + "\n";
 
             MainActivity.this.runOnUiThread(new Runnable() {
 
