@@ -1,16 +1,29 @@
 package com.diremangoes.direhyperchess;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,32 +31,101 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.net.NetworkInterface;
+import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.SocketException;
+import java.util.Enumeration;
 
-public class MainActivity extends AppCompatActivity {
+import layout.Chessgame;
+
+public class MainActivity extends FragmentActivity {
+    TextView info, infoip, msg;
+    String message ="";
+    ServerSocket serverSocket;
+    int defaultPort = 8080;
+    EditText ServerPort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        info = (TextView) findViewById(R.id.info);
+        infoip = (TextView) findViewById(R.id.infoip);
+        msg = (TextView) findViewById(R.id.msg);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        info.setText(getIpAddress());
+
+        Button serverButton = (Button) findViewById(R.id.buttonServer);
+        Button clientButton = (Button) findViewById(R.id.buttonClient);
+
+        final EditText ServerIP = (EditText) findViewById(R.id.editText2);
+        EditText ServerPort = (EditText) findViewById(R.id.editText);
+        final Thread socketServerThread = new Thread(new SocketServerThread());
+
+
+
+
+
+        ServerPort.setText(String.valueOf(defaultPort));
+        ServerPort.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() != 0) {
+                    defaultPort = Integer.valueOf(s.toString());
+                }
             }
         });
 
-        ImageView [][] GUIBoard = new ImageView[8][8];
+        serverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (socketServerThread.isAlive())
+                    socketServerThread.destroy();
+
+                WifiManager wifiMan = (WifiManager) getBaseContext().getSystemService(Context.WIFI_SERVICE);
+                WifiInfo wifiInf = wifiMan.getConnectionInfo();
+                int ipAddress = wifiInf.getIpAddress();
+                String ip = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+
+                ServerIP.setText(ip);
+                ServerIP.setFocusable(false);
+
+                socketServerThread.start();
+                //msg.setText("Handshake from the server.");
+
+            }
+        });
+
+       clientButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent client = new Intent(getBaseContext(), Client.class);
+               startActivity(client);
+           }
+       });
+
+        InitBoard();
+
+    }
+
+
+    public void InitBoard(){
+        ImageView[][] GUIBoard = new ImageView[8][8];
         {
             GUIBoard[0][0] = (ImageView) findViewById(R.id.cellA1);
             GUIBoard[1][0] = (ImageView) findViewById(R.id.cellA2);
@@ -111,9 +193,150 @@ public class MainActivity extends AppCompatActivity {
             GUIBoard[7][7] = (ImageView) findViewById(R.id.cellH8);
         }
 
+
     }
 
-    public void SyncGame(String msg){
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
+
+        if (serverSocket != null) {
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private class SocketServerThread extends Thread {
+
+        static final int socketServerPort = 8080;
+        int count =0;
+
+        @Override
+        public void run(){
+            try{
+                serverSocket = new ServerSocket(socketServerPort);
+                MainActivity.this.runOnUiThread(new Runnable(){
+                    @Override
+                    public void run() {
+                        info.setText("I'm waiting here: "
+                                + serverSocket.getLocalPort());
+//                        ServerPort.setText(serverSocket.getLocalPort());
+                    }
+                });
+
+                while (true) {
+                    Socket socket = serverSocket.accept();
+                    count++;
+                    message += "#" + count + " from " + socket.getInetAddress()
+                            + ":" + socket.getPort() + "\n";
+
+
+
+                    MainActivity.this.runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            msg.setText(message);
+                        }
+                    });
+
+                    SocketServerReplyThread socketServerReplyThread = new SocketServerReplyThread(
+                            socket, count);
+                    socketServerReplyThread.run();
+
+                }
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+private class SocketServerReplyThread extends Thread {
+
+    private Socket hostThreadSocket;
+    int cnt;
+
+    SocketServerReplyThread(Socket socket, int c) {
+        hostThreadSocket = socket;
+        cnt = c;
+    }
+
+    @Override
+    public void run() {
+        OutputStream outputStream;
+        String msgReply = "Hello from Android, you are #" + cnt;
+
+        try {
+            outputStream = hostThreadSocket.getOutputStream();
+            PrintStream printStream = new PrintStream(outputStream);
+            printStream.print(msgReply);
+            printStream.close();
+
+            message += "replayed: " + msgReply + "\n";
+
+            MainActivity.this.runOnUiThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    msg.setText(message);
+                }
+            });
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            message += "Something wrong! " + e.toString() + "\n";
+        }
+
+        MainActivity.this.runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                msg.setText(message);
+            }
+        });
+    }
+
+}
+
+    private String getIpAddress() {
+        String ip = "";
+        try {
+            Enumeration<NetworkInterface> enumNetworkInterfaces = NetworkInterface
+                    .getNetworkInterfaces();
+            while (enumNetworkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = enumNetworkInterfaces
+                        .nextElement();
+                Enumeration<InetAddress> enumInetAddress = networkInterface
+                        .getInetAddresses();
+                while (enumInetAddress.hasMoreElements()) {
+                    InetAddress inetAddress = enumInetAddress.nextElement();
+
+                    if (inetAddress.isSiteLocalAddress()) {
+                        ip += "SiteLocalAddress: "
+                                + inetAddress.getHostAddress() + "\n";
+                    }
+
+                }
+
+            }
+
+        } catch (SocketException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            ip += "Something Wrong! " + e.toString() + "\n";
+        }
+
+        return ip;
+    }
+    /*public void SyncGame(String msg){
 
     }
 
@@ -122,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

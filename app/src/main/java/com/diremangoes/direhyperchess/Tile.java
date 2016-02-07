@@ -1,4 +1,5 @@
 // provides for the Tile class and its game-piece logic
+package com.diremangoes.direhyperchess;
 
 import java.util.*;
 

@@ -1,3 +1,4 @@
+package com.diremangoes.direhyperchess;
 
 public enum PieceType {
         EMPTY,
