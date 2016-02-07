@@ -16,7 +16,7 @@ public class Tile {
         _is_selected = false;
         _cooldown = 0;
         
-        System.out.format("%s %d (%d,%d)\n", ptype, powner, xpos, ypos);
+        // System.out.format("%s %d (%d,%d)\n", ptype, powner, xpos, ypos);
     }
     
     
