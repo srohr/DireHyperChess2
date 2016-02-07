@@ -146,8 +146,6 @@ public class Tile {
     
     
     
-    
-    
     public PieceType getPieceType() {return _ptype;}
     public int getPieceOwner()      {return _powner;}
     public int getxpos()            {return _xpos;}
